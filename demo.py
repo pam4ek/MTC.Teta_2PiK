@@ -52,7 +52,8 @@ def gen_random_param():
 	return params
 
 
-model_pipeline = joblib.load('models/final_model.pkl')
+#model_pipeline = joblib.load('models/final_model.pkl')
+model = joblib.load('models/cb_model.pkl')
 target_name = ["won't accept",'will accept']
 
 st.title('Demo of personal loan prediction model')
@@ -82,16 +83,16 @@ with st.form('text'):
 	button = st.form_submit_button('Click here to predict one person')
 	if button:
 		test_df = to_df(ID,Age,Exp,Incm,Fam,CCAvg,education,Mort,sa,cd,online,credit)
-		#pipeline = joblib.load('data_engeneering_pipeline.pkl')
-		ready_to_predict = model_pipeline[:-1].fit_transform(test_df)
-		pred = model_pipeline.predict(test_df)
-		prob = model_pipeline[-1].predict_proba(ready_to_predict)
-		explainer = shap.TreeExplainer(model_pipeline.named_steps['cb_classifier'])
+		pipeline = joblib.load('data_engeneering_pipeline.pkl')
+		#ready_to_predict = model_pipeline[:-1].fit_transform(test_df)
+		ready_to_predict = pipeline.fit_transform(test_df)
+		pred = model.predict(ready_to_predict)
+		prob = model.predict_proba(ready_to_predict)
+		explainer = shap.TreeExplainer(model)
 		shap_values = explainer.shap_values(ready_to_predict)
 		name = f'Сlient {target_name[pred[0]]} offer with {prob[0][pred[0]]:.3f} probability' 
 		st.write(name)
-		st.pyplot(shap.force_plot(explainer.expected_value, shap_values[0,:],
-		 ready_to_predict.iloc[0,:], show=False, matplotlib=True, out_names='probability of prediction'))
+		st.pyplot(shap.force_plot(explainer.expected_value, shap_values[0,:], ready_to_predict.iloc[0,:], out_names='probability of acception',show=False, matplotlib=True))
 
 
 
