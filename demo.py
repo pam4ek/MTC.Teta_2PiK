@@ -93,7 +93,8 @@ with st.form('text'):
 		name = f'Сlient {target_name[pred[0]]} offer with {prob[0][pred[0]]:.3f} probability' 
 		st.write(name)
 		st.pyplot(shap.force_plot(explainer.expected_value, shap_values[0,:], ready_to_predict.iloc[0,:], out_names='probability of acception',show=False, matplotlib=True))
-
+		st.markdown('Наиболее важные признаки расположены ближе к границе, значимость этого признака представлена размером полосы.  '
+					'Красным показаны признаки, которые повысили оценку модели, а синим — признаки, которые понизили оценку.')
 
 
 
