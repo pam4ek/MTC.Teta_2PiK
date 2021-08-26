@@ -59,7 +59,6 @@ def gen_random_param():
 model_pipeline = joblib.load('models/final_model.pkl')
 target_name = ["won't accept",'will accept']
 st.set_page_config(layout="wide")
-
 st.title('Demo of personal loan prediction model')
 #st.write('<small>For the correct display of the results switch on to the light theme in the settings</small>', unsafe_allow_html=True)
 
@@ -76,7 +75,7 @@ with st.form('text'):
 	ID=randint(0,300)
 	Age = c1.number_input("Enter client's age", min_value = 21, value = params['age'])
 	Exp = c2.number_input("Enter client's professional experience", min_value = 0, value= params['exp'])
-	Incm = c3.number_input("Enter client's annual income($000)",min_value = 0,  value = params['inc'], step = 5)
+	Incm = c3.number_input("Enter client's annual income($000)", min_value=0, value = params['inc'], step = 5)
 	Fam = c4.number_input("Enter the client's size family", min_value = 1, value = params['fam'])
 	CCAvg = c5.number_input("Enter client's average spending on credit cards per month ($000)", min_value = 0.0, value = float(params['ccavg']))
 	Mort = c6.number_input("Enter the mortgage size if any ($000)", min_value = 0, step = 50, value = params['mort'])
@@ -121,14 +120,14 @@ st.markdown('__OR__')
 with st.form('table'):
 	st.write('For the correct work, please use the table format below (with the right order and names of columns)')
 	example_df = pd.DataFrame(index=['Data type'])
-	example_df['ID'] = 'int'
+	example_df['ID']='int'
 	example_df['Age'] = 'int'
 	example_df['Experience'] = 'int'
 	example_df['Income'] = 'int'
 	example_df['ZIP Code'] = 'int'
 	example_df['Family'] = 'int'
 	example_df['CCAvg'] = 'float'
-	example_df['Education'] = 'Undergrad: 0, Graduate: 1\nAdvanced/Professional:2'
+	example_df['Education'] =  'Undergrad: 0, Graduate: 1\nAdvanced/Professional:2'
 	example_df['Mortgage'] = 'int or bool'
 	example_df['Securities Account'] = 'int or bool'
 	example_df['CD Account'] = 'int or bool'
@@ -136,7 +135,6 @@ with st.form('table'):
 	example_df['CreditCard'] = 'int or bool'
 	example_df.index.name = 'Name of columns'
 	st.table(example_df)
-
 	uploaded_file = st.file_uploader("Upload a csv file", ["csv"])
 	file_button = st.form_submit_button('Predict labels')
 
