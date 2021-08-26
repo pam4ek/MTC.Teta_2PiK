@@ -146,9 +146,9 @@ with st.form('table'):
 
 	if file_button:
 		try:
-			pipeline = joblib.load('data_engeneering_pipeline.pkl')
-			ready_to_predict = pipeline.fit_transform(file)
-			pred = model.predict(ready_to_predict)
+			#pipeline = joblib.load('data_engeneering_pipeline.pkl')
+			#ready_to_predict = pipeline.fit_transform(file)
+			pred = model_pipeline.predict(file)
 			file['Predictions'] = pred
 			final_table_columns = ['ID', 'Predictions']
 			file = file.drop(columns=[col for col in file if col not in final_table_columns])
